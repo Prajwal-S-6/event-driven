@@ -18,6 +18,10 @@ public class RMQProducer {
     public void sendMessage(String message) {
         logTheMessage(message);
         rabbitTemplate.convertAndSend("demo_rmq_exchange_1", "routing.key.any", message);
+        rabbitTemplate.convertAndSend("demo_rmq_exchange_1", "routing.key.1", message);
+        rabbitTemplate.convertAndSend("demo_rmq_exchange_2", "routing.key.1", message);
+        rabbitTemplate.convertAndSend("demo_rmq_exchange_2", "routing.key.any", message);
+        rabbitTemplate.convertAndSend("demo_rmq_exchange_3", "some-random-key", message);
     }
 
     private void logTheMessage(String message) {

@@ -11,8 +11,13 @@ import java.util.Arrays;
 public class RMQConsumer {
     Logger logger = LoggerFactory.getLogger(RMQConsumer.class);
 
-    @RabbitListener(queues = {"${kp.rmq.demo.queue-name-1}", "${kp.rmq.demo.queue-name-2}"})
-    public void consumer(String message) {
-        logger.info("Received Message: {}", message);
+    @RabbitListener(queues = {"${kp.rmq.demo.queue-name-1}"})
+    public void consumer1(String message) {
+        logger.info("Received Message from Queue 1: {}", message);
+    }
+
+    @RabbitListener(queues = {"${kp.rmq.demo.queue-name-2}"})
+    public void consumer2(String message) {
+        logger.info("Received Message from Queue 2: {}", message);
     }
 }

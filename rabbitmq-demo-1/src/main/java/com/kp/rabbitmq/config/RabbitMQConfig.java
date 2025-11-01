@@ -14,6 +14,9 @@ public class RabbitMQConfig {
     @Value("${kp.rmq.demo.direct.exchange-name}")
     private String directExchangeName;
 
+    @Value("${kp.rmq.demo.fanout.exchange-name}")
+    private String fanoutExchangeName;
+
     @Value("${kp.rmq.demo.queue-name-1}")
     private String queueName1;
 
@@ -26,6 +29,7 @@ public class RabbitMQConfig {
     @Value("${kp.rmq.demo.direct.routing-key}")
     private String routingKeyForDirectExchange;
 
+
     @Bean
     public TopicExchange topicExchange() {
         return new TopicExchange(topicExchangeName);
@@ -34,6 +38,11 @@ public class RabbitMQConfig {
     @Bean
     public DirectExchange directExchange() {
         return new DirectExchange(directExchangeName);
+    }
+
+    @Bean
+    public FanoutExchange fanoutExchange() {
+        return new FanoutExchange(fanoutExchangeName);
     }
 
     @Bean
@@ -47,17 +56,43 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding bindingTopicExchange1() {
+    public Binding bindingExchange1() {
         return BindingBuilder.bind(queue1())
                 .to(topicExchange())
                 .with(routingKeyForTopicExchange);
     }
 
     @Bean
-    public Binding bindingTopicExchange2() {
+    public Binding bindingExchange2() {
         return BindingBuilder.bind(queue2())
                 .to(topicExchange())
                 .with(routingKeyForDirectExchange);
+    }
+
+    @Bean
+    public Binding bindingExchange3() {
+        return BindingBuilder.bind(queue1())
+                .to(directExchange())
+                .with(routingKeyForTopicExchange);
+    }
+
+    @Bean
+    public Binding bindingExchange4() {
+        return BindingBuilder.bind(queue2())
+                .to(directExchange())
+                .with(routingKeyForDirectExchange);
+    }
+
+    @Bean
+    public Binding bindingExchange5() {
+        return BindingBuilder.bind(queue1())
+                .to(fanoutExchange());
+    }
+
+    @Bean
+    public Binding bindingExchange6() {
+        return BindingBuilder.bind(queue2())
+                .to(fanoutExchange());
     }
 
 
