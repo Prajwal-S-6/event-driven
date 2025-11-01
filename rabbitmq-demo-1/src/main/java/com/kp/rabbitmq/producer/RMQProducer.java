@@ -19,20 +19,20 @@ public class RMQProducer {
     public void sendMessage(String message) {
         logger.info("Sending message: {}", message);
 
-        // Topic
-        rabbitTemplate.convertAndSend("demo_rmq_exchange_1", "routing.key.any", message);   // goes to Q1
-        rabbitTemplate.convertAndSend("demo_rmq_exchange_1", "routing.key.1", message);     // goes to Q2 and Q1
-
-        //Direct
-        rabbitTemplate.convertAndSend("demo_rmq_exchange_2", "routing.key.1", message);     // goes to Q2
-        rabbitTemplate.convertAndSend("demo_rmq_exchange_2", "routing.key.any", message);   // nowhere
-
-        //Fanout
-        rabbitTemplate.convertAndSend("demo_rmq_exchange_3", "some-random-key", message);   // goes to Q1 and Q2
+//        // Topic
+//        rabbitTemplate.convertAndSend("demo_rmq_exchange_1", "routing.key.any", message);   // goes to Q1
+//        rabbitTemplate.convertAndSend("demo_rmq_exchange_1", "routing.key.1", message);     // goes to Q2 and Q1
+//
+//        //Direct
+//        rabbitTemplate.convertAndSend("demo_rmq_exchange_2", "routing.key.1", message);     // goes to Q2
+//        rabbitTemplate.convertAndSend("demo_rmq_exchange_2", "routing.key.any", message);   // nowhere
+//
+//        //Fanout
+//        rabbitTemplate.convertAndSend("demo_rmq_exchange_3", "some-random-key", message);   // goes to Q1 and Q2
     }
 
     public void sendUserDetails(User user) {
         logger.info("Sending message: {}", user);
-        rabbitTemplate.convertAndSend("demo_rmq_exchange_3", "routing.key.any", user);
+        rabbitTemplate.convertAndSend("demo_rmq_exchange_1", "routing.key.3.4", user);
     }
 }

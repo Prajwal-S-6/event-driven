@@ -62,8 +62,8 @@ public class RabbitMQConfig {
 
 
     @Bean
-    public TopicExchange exchange() {
-        return new TopicExchange("order-events");
+    public DirectExchange exchange() {
+        return new DirectExchange("order-events");
     }
     @Bean
     public Queue orderQueue() {
@@ -74,7 +74,7 @@ public class RabbitMQConfig {
     public Binding orderQueueBinding() {
         return BindingBuilder.bind(orderQueue())
                 .to(exchange())
-                .with("#");
+                .with("order.routing.key");
     }
 
     @Bean
