@@ -16,8 +16,14 @@ public class DemoController {
     private final RMQProducer rmqProducer;
 
     @PostMapping("/sendMessageToTopicExchange")
-    public ResponseEntity<String> sendMessage(@RequestParam(name = "message") String message) {
-        rmqProducer.sendMessage(message);
+    public ResponseEntity<String> sendMessageToTopicExchange(@RequestParam(name = "message") String message) {
+        rmqProducer.sendMessageToTopicExchange(message);
+        return ResponseEntity.accepted().build();
+    }
+
+    @PostMapping("/sendMessageToDirectExchange")
+    public ResponseEntity<String> sendMessageToDirectExchange(@RequestParam(name = "message") String message) {
+        rmqProducer.sendMessageToDirectExchange(message);
         return ResponseEntity.accepted().build();
     }
 }

@@ -9,17 +9,28 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     @Value("${kp.rmq.demo.topic.exchange-name}")
-    private String exchangeName;
+    private String topicExchangeName;
+
+    @Value("${kp.rmq.demo.direct.exchange-name}")
+    private String directExchangeName;
 
     @Value("${kp.rmq.demo.queue-name}")
     private String queueName;
 
     @Value("${kp.rmq.demo.topic.routing-key}")
-    private String routingKey;
+    private String routingKeyForTopicExchange;
+
+    @Value("${kp.rmq.demo.direct.routing-key}")
+    private String routingKeyForDirectExchange;
 
     @Bean
     public TopicExchange topicExchange() {
-        return new TopicExchange(exchangeName);
+        return new TopicExchange(topicExchangeName);
+    }
+
+    @Bean
+    public DirectExchange directExchange() {
+        return new DirectExchange(directExchangeName);
     }
 
     @Bean
@@ -28,10 +39,17 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding binding() {
+    public Binding bindingTopicExchange() {
         return BindingBuilder.bind(queue())
                 .to(topicExchange())
-                .with(routingKey);
+                .with(routingKeyForTopicExchange);
+    }
+
+    @Bean
+    public Binding bindingDirectExchange() {
+        return BindingBuilder.bind(queue())
+                .to(directExchange())
+                .with(routingKeyForDirectExchange);
     }
 
 }

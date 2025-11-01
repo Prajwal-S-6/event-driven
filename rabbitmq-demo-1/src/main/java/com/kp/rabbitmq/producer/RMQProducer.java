@@ -15,15 +15,17 @@ public class RMQProducer {
 
     private final RabbitTemplate rabbitTemplate;
 
-    @Value("${kp.rmq.demo.topic.routing-key}")
-    private String routingKey;
+    public void sendMessageToTopicExchange(String message) {
+        logTheMessage(message);
+        rabbitTemplate.convertAndSend("demo_rmq_exchange_1", "routing.key.any", message);
+    }
 
-    @Value("${kp.rmq.demo.topic.exchange-name}")
-    private String exchangeName;
+    public void sendMessageToDirectExchange(String message) {
+        logTheMessage(message);
+        rabbitTemplate.convertAndSend("demo_rmq_exchange_2", "routing.key.1", message);
+    }
 
-    public void sendMessage(String message) {
+    private void logTheMessage(String message) {
         logger.info("Sending message: {}", message);
-        //rabbitTemplate.convertAndSend(exchangeName, routingKey, message);
-        rabbitTemplate.convertAndSend(exchangeName, "routing.key.any", message);
     }
 }
