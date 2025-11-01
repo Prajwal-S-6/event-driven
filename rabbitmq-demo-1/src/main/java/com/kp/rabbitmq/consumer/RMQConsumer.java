@@ -1,5 +1,6 @@
 package com.kp.rabbitmq.consumer;
 
+import com.kp.rabbitmq.dto.Order;
 import com.kp.rabbitmq.dto.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,5 +31,11 @@ public class RMQConsumer {
     @RabbitListener(queues = {"${kp.rmq.demo.queue-name-2}"})
     public void consumer4(User user) {
         logger.info("Received Message from Queue 2: {}", user);
+    }
+
+
+    @RabbitListener(queues = {"order_queue"})
+    public void orderConsumer(Order order) {
+        logger.info("Received Order: {}", order);
     }
 }

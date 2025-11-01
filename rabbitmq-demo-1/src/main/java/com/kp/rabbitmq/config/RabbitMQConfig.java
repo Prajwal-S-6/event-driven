@@ -60,6 +60,23 @@ public class RabbitMQConfig {
         return new Queue(queueName2);
     }
 
+
+    @Bean
+    public TopicExchange exchange() {
+        return new TopicExchange("order-events");
+    }
+    @Bean
+    public Queue orderQueue() {
+        return new Queue("order_queue");
+    }
+
+    @Bean
+    public Binding orderQueueBinding() {
+        return BindingBuilder.bind(orderQueue())
+                .to(exchange())
+                .with("#");
+    }
+
     @Bean
     public Binding bindingExchange1() {
         return BindingBuilder.bind(queue1())
