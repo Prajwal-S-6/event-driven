@@ -15,7 +15,7 @@ public class RMQProducer {
 
     private final RabbitTemplate rabbitTemplate;
 
-    @Value("${kp.rmq.demo.routing-key}")
+    @Value("${kp.rmq.demo.topic.routing-key}")
     private String routingKey;
 
     @Value("${kp.rmq.demo.topic.exchange-name}")
@@ -23,6 +23,7 @@ public class RMQProducer {
 
     public void sendMessage(String message) {
         logger.info("Sending message: {}", message);
-        rabbitTemplate.convertAndSend(exchangeName, routingKey, message);
+        //rabbitTemplate.convertAndSend(exchangeName, routingKey, message);
+        rabbitTemplate.convertAndSend(exchangeName, "routing.key.any", message);
     }
 }
