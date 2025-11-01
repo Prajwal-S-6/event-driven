@@ -17,11 +17,16 @@ public class RMQProducer {
 
     public void sendMessage(String message) {
         logTheMessage(message);
-        rabbitTemplate.convertAndSend("demo_rmq_exchange_1", "routing.key.any", message);
-        rabbitTemplate.convertAndSend("demo_rmq_exchange_1", "routing.key.1", message);
-        rabbitTemplate.convertAndSend("demo_rmq_exchange_2", "routing.key.1", message);
-        rabbitTemplate.convertAndSend("demo_rmq_exchange_2", "routing.key.any", message);
-        rabbitTemplate.convertAndSend("demo_rmq_exchange_3", "some-random-key", message);
+        // Topic
+        rabbitTemplate.convertAndSend("demo_rmq_exchange_1", "routing.key.any", message);   // goes to Q1
+        rabbitTemplate.convertAndSend("demo_rmq_exchange_1", "routing.key.1", message);     // goes to Q2 and Q1
+
+        //Direct
+        rabbitTemplate.convertAndSend("demo_rmq_exchange_2", "routing.key.1", message);     // goes to Q2
+        rabbitTemplate.convertAndSend("demo_rmq_exchange_2", "routing.key.any", message);   // nowhere
+        
+        //Fanout
+        rabbitTemplate.convertAndSend("demo_rmq_exchange_3", "some-random-key", message);   // goes to Q1 and Q2
     }
 
     private void logTheMessage(String message) {
