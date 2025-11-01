@@ -1,6 +1,6 @@
 package com.kp.rabbitmq.config;
 
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Value("${kp.rmq.demo.exchange-name}")
+    @Value("${kp.rmq.demo.topic.exchange-name}")
     private String exchangeName;
 
     @Value("${kp.rmq.demo.queue-name}")
@@ -20,6 +20,18 @@ public class RabbitMQConfig {
     @Bean
     public TopicExchange topicExchange() {
         return new TopicExchange("");
+    }
+
+    @Bean
+    public Queue queue() {
+        return new Queue(queueName);
+    }
+
+    @Bean
+    public Binding binding() {
+        return BindingBuilder.bind(queue())
+                .to(topicExchange())
+                .with(routingKey);
     }
 
 }
