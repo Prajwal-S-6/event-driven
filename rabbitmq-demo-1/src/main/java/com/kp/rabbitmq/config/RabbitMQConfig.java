@@ -14,8 +14,11 @@ public class RabbitMQConfig {
     @Value("${kp.rmq.demo.direct.exchange-name}")
     private String directExchangeName;
 
-    @Value("${kp.rmq.demo.queue-name}")
-    private String queueName;
+    @Value("${kp.rmq.demo.queue-name-1}")
+    private String queueName1;
+
+    @Value("${kp.rmq.demo.queue-name-2}")
+    private String queueName2;
 
     @Value("${kp.rmq.demo.topic.routing-key}")
     private String routingKeyForTopicExchange;
@@ -34,22 +37,28 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Queue queue() {
-        return new Queue(queueName);
+    public Queue queue1() {
+        return new Queue(queueName1);
     }
 
     @Bean
-    public Binding bindingTopicExchange() {
-        return BindingBuilder.bind(queue())
+    public Queue queue2() {
+        return new Queue(queueName2);
+    }
+
+    @Bean
+    public Binding bindingTopicExchange1() {
+        return BindingBuilder.bind(queue1())
                 .to(topicExchange())
                 .with(routingKeyForTopicExchange);
     }
 
     @Bean
-    public Binding bindingDirectExchange() {
-        return BindingBuilder.bind(queue())
-                .to(directExchange())
+    public Binding bindingTopicExchange2() {
+        return BindingBuilder.bind(queue2())
+                .to(topicExchange())
                 .with(routingKeyForDirectExchange);
     }
+
 
 }
