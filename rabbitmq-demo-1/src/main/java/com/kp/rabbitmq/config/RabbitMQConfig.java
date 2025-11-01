@@ -14,7 +14,7 @@ public class RabbitMQConfig {
     @Value("${kp.rmq.demo.queue-name}")
     private String queueName;
 
-    @Value("${kp.rmq.demo.routing-key}")
+    @Value("${kp.rmq.demo.topic.routing-key}")
     private String routingKey;
 
     @Bean
