@@ -15,9 +15,9 @@ public class KafkaProducer {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public void sendMessage() {
+    public void sendMessage(String messageEvent) {
         Message<String> message = MessageBuilder
-                .withPayload("Hello world!!")
+                .withPayload(messageEvent)
                 .setHeader(TOPIC, "demo_topic")
                 .build();
         kafkaTemplate.send(message);

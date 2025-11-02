@@ -9,16 +9,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @RequiredArgsConstructor
-public class KafkaDemo1Application implements CommandLineRunner {
+public class KafkaDemo1Application {
 
     private final KafkaProducer kafkaProducer;
 
     public static void main(String[] args) {
         SpringApplication.run(KafkaDemo1Application.class, args);
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
-        kafkaProducer.sendMessage();
     }
 }
