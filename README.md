@@ -1,4 +1,5 @@
 # Event-Driven
 
-Using Spring Cloud and Spring AMQP with:
+Using Message Brokers:
 1. RabbitMQ
+2. Kafka
