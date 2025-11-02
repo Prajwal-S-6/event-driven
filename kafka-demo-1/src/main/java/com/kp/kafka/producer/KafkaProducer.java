@@ -1,5 +1,6 @@
 package com.kp.kafka.producer;
 
+import com.kp.kafka.dto.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.messaging.Message;
@@ -19,6 +20,15 @@ public class KafkaProducer {
         Message<String> message = MessageBuilder
                 .withPayload(messageEvent)
                 .setHeader(TOPIC, "demo_topic")
+                .build();
+        kafkaTemplate.send(message);
+
+    }
+
+    public void sendUserDetails(User user) {
+        Message<User> message = MessageBuilder
+                .withPayload(user)
+                .setHeader(TOPIC, "demo_topic_user")
                 .build();
         kafkaTemplate.send(message);
 

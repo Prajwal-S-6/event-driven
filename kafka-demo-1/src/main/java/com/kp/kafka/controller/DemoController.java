@@ -1,12 +1,10 @@
 package com.kp.kafka.controller;
 
+import com.kp.kafka.dto.User;
 import com.kp.kafka.producer.KafkaProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -18,6 +16,12 @@ public class DemoController {
     @PostMapping("/sendMessage")
     public ResponseEntity<String> sendMessage(@RequestParam String message) {
         kafkaProducer.sendMessage(message);
+        return ResponseEntity.accepted().build();
+    }
+
+    @PostMapping("/sendUserDetails")
+    public ResponseEntity<String> sendUserDetails(@RequestBody User user) {
+        kafkaProducer.sendUserDetails(user);
         return ResponseEntity.accepted().build();
     }
 }
