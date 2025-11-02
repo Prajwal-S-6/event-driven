@@ -12,7 +12,7 @@ public class OrderProducer {
     private final StreamBridge streamBridge;
 
     public void sendOrderDetails(Order order) {
-        streamBridge.send("order_topic", order);
+        streamBridge.send("orderProducer-out-0", order);
     }
 
 }
